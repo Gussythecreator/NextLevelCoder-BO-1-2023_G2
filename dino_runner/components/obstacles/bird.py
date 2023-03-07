@@ -5,7 +5,7 @@ class Bird(Obstacle):
 
     def __init__(self, image_list):
         self.type = 0
-        super().__init__(image_list, self.type) #llama al metodo constructor padre y setea todo
+        super().__init__(image_list, self.type)
         self.rect.y = 250
         self.index = 0
 
