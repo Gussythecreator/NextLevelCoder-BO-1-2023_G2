@@ -70,3 +70,12 @@ BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/Track.png'))
 HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
 
 DEFAULT_TYPE = "default"
+COLORS = {
+    "black" : (0,0,0),
+    "white" : (255, 255, 255),
+    "darkblue" : (0, 0, 139),
+    "darkred" : (139, 0, 0),
+    "hotpink" : (255, 105, 180),
+    "lime" : (0, 255, 0),
+    "purple" : (75, 0, 130)
+}

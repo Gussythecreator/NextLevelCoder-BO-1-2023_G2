@@ -1,7 +1,7 @@
-import pygame
-
-from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS
+import pygame, os
+from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, COLORS, RUNNING, BIRD
 from dino_runner.components.dinosaur import Dinosaur
+from dino_runner.components.text_utils import TextUtils
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 
 class Game:
@@ -17,16 +17,28 @@ class Game:
         self.y_pos_bg = 380
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
+        self.points = 0
+        self.text_utils = TextUtils()
+        self.game_running = True
+        self.is_playing_music = False
 
 
     def run(self):
+        pygame.mixer.music.load(os.path.join("fondo.mp3")) 
+        pygame.mixer.music.set_volume(0.2)
+        pygame.mixer.music.play(-1)
+        self.is_playing_music = True
         # Game loop: events - update - draw
         self.playing = True
+        self.obstacle_manager.reset_obstacles()
+        self.points = 0
         while self.playing:
             self.events()
             self.update()
             self.draw()
-        pygame.quit()
+
+        pygame.mixer.music.stop()
+        self.is_playing_music = False
 
     def events(self):
         for event in pygame.event.get():
@@ -39,12 +51,19 @@ class Game:
 
 
     def draw(self):
+        
         self.clock.tick(FPS)
         self.screen.fill((255, 255, 255))
         self.draw_background()
 
         self.player.draw(self.screen)
         self.obstacle_manager.draw(self.screen)
+        self.score()
+
+        if self.is_playing_music:
+            pygame.mixer.music.unpause()
+        else:
+            pygame.mixer.music.pause()
 
         pygame.display.update()
         pygame.display.flip()
@@ -57,3 +76,45 @@ class Game:
             self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
             self.x_pos_bg = 0
         self.x_pos_bg -= self.game_speed
+
+    def score(self):
+        self.points += 1
+        text, text_rect = self.text_utils.get_score(self.points)
+        self.screen.blit(text, text_rect)
+
+    def show_menu(self, death_count = 0):
+        self.game_running = True
+        self.screen.fill(COLORS["purple"])
+
+        self.print_menu_elements(death_count)
+
+        pygame.display.update()
+        self.handle_key_events()
+
+    def print_menu_elements(self, deat_count = 0):
+        text, text_rect = self.text_utils.get_centered_message("Press any key to Start")
+        self.screen.blit(text, text_rect)
+        if deat_count > 0:
+            score, score_rect = self.text_utils.get_centered_message(
+                "Your Score: " + str(self.points),
+                height= SCREEN_HEIGHT//2 + 50)
+            self.screen.blit(score, score_rect)
+
+        message, message_rect = self.text_utils.get_menu_message("Use the up arrow key to jump over obstacles")
+        self.screen.blit(message, message_rect)
+        self.screen.blit(RUNNING[0], (SCREEN_WIDTH//2 - 20, SCREEN_HEIGHT//2 - 140))
+        self.screen.blit(BIRD[1], (SCREEN_WIDTH - 150, SCREEN_HEIGHT//2 - 240))
+
+
+
+    def handle_key_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.game_running = False
+                self.playing = False
+                pygame.display.quit()
+                pygame.quit()
+            if event.type == pygame.KEYDOWN:
+                self.run()
+
+
