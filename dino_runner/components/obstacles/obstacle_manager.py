@@ -24,14 +24,18 @@ class ObstacleManager:
            # self.obstacles.append(Cactus(LARGE_CACTUS))
            # self.obstacles.append(Bird(BIRD))
 
-
-
         for obstacle in self.obstacles:
             obstacle.update(game.game_speed, self.obstacles)
             if game.player.dino_rect.colliderect(obstacle.rect):
-                pygame.time.delay(500)
-                game.playing = False
-                break
+                if not game.player.shield:
+                    game.lifes -= 1
+                    if game.lifes < 0:
+                        pygame.time.delay(500)
+                        game.playing = False
+                    self.obstacles.remove(obstacle)
+                    break
+                else:
+                    self.obstacles.remove(obstacle)
 
     def draw(self, screen):
         for obstacle in self.obstacles:

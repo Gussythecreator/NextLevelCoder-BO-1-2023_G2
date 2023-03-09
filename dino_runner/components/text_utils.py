@@ -13,14 +13,14 @@ class TextUtils:
     
     def get_centered_message(self, message, width = SCREEN_WIDTH//2, height = SCREEN_HEIGHT//2):
         font = pygame.font.Font(self.FONT_STYLE, 35)
-        text = font.render(message, True, COLORS["lime"])
+        text = font.render(message, True, COLORS["darkblue"])
         text_rect = text.get_rect()
         text_rect.center = (width, height)
         return text, text_rect   
     
     def get_menu_message(self, message, width = SCREEN_WIDTH//2, height = SCREEN_HEIGHT//2 + 100):
         font = pygame.font.Font(self.FONT_STYLE, 25)
-        text = font.render(message, True, COLORS["lime"])
+        text = font.render(message, True, COLORS["darkblue"])
         text_rect = text.get_rect()
         text_rect.center = (width, height)
         return text, text_rect

@@ -49,10 +49,12 @@ SMALL_CACTUS = [
     pygame.image.load(os.path.join(IMG_DIR, "Cactus/SmallCactus1.png")),
     pygame.image.load(os.path.join(IMG_DIR, "Cactus/SmallCactus2.png")),
     pygame.image.load(os.path.join(IMG_DIR, "Cactus/SmallCactus3.png")),
+    
 ]
 LARGE_CACTUS = [
     pygame.image.load(os.path.join(IMG_DIR, "Cactus/LargeCactus1.png")),
     pygame.image.load(os.path.join(IMG_DIR, "Cactus/LargeCactus2.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Cactus/LargeCactus22.png")),
     pygame.image.load(os.path.join(IMG_DIR, "Cactus/LargeCactus3.png")),
 ]
 
@@ -65,11 +67,17 @@ CLOUD = pygame.image.load(os.path.join(IMG_DIR, 'Other/Cloud.png'))
 SHIELD = pygame.image.load(os.path.join(IMG_DIR, 'Other/shield.png'))
 HAMMER = pygame.image.load(os.path.join(IMG_DIR, 'Other/hammer.png'))
 
-BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/Track.png'))
+BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/tierra.png'))
+BGMENU = pygame.image.load(os.path.join(IMG_DIR, 'Other/Dino-Chrome.png'))
+FONDOP = pygame.image.load(os.path.join(IMG_DIR, 'Other/fondopasto.png'))
 
 HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
 
 DEFAULT_TYPE = "default"
+SHIELD_TYPE = "shield"
+HAMMER_TYPE = "hammer"
+
+
 COLORS = {
     "black" : (0,0,0),
     "white" : (255, 255, 255),

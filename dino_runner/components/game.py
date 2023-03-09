@@ -1,8 +1,11 @@
-import pygame, os
-from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, COLORS, RUNNING, BIRD
-from dino_runner.components.dinosaur import Dinosaur
-from dino_runner.components.text_utils import TextUtils
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
+from dino_runner.components.power_ups.power_up_manager import PowerUpManager
+from dino_runner.components.text_utils import TextUtils
+import pygame, os
+from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, COLORS, RUNNING, BIRD, BGMENU, FONDOP, HEART
+from dino_runner.components.dinosaur import Dinosaur
+
+
 
 class Game:
     def __init__(self):
@@ -18,10 +21,11 @@ class Game:
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
         self.points = 0
+        self.lifes = 3
         self.text_utils = TextUtils()
         self.game_running = True
         self.is_playing_music = False
-
+        self.powerup_manager = PowerUpManager()
 
     def run(self):
         pygame.mixer.music.load(os.path.join("fondo.mp3")) 
@@ -32,6 +36,7 @@ class Game:
         self.playing = True
         self.obstacle_manager.reset_obstacles()
         self.points = 0
+        self.lifes = 3
         while self.playing:
             self.events()
             self.update()
@@ -48,17 +53,24 @@ class Game:
     def update(self):
         self.player.update(pygame.key.get_pressed()) #tambien se podia poner self.player.update(user_input) 
         self.obstacle_manager.update(self)
+        self.powerup_manager.update(self.points, self.game_speed, self.player)
 
 
     def draw(self):
         
         self.clock.tick(FPS)
-        self.screen.fill((255, 255, 255))
+        if self.points >= 0:
+            self.screen.blit(FONDOP, (0, 0))
+        if self.points >= 500:
+            self.screen.fill(COLORS["white"])
+        
         self.draw_background()
 
         self.player.draw(self.screen)
         self.obstacle_manager.draw(self.screen)
+        self.powerup_manager.draw(self.screen)
         self.score()
+        self.Hearts()
 
         if self.is_playing_music:
             pygame.mixer.music.unpause()
@@ -80,11 +92,21 @@ class Game:
     def score(self):
         self.points += 1
         text, text_rect = self.text_utils.get_score(self.points)
+        self.player.check_invincibility()
         self.screen.blit(text, text_rect)
+
+    def Hearts(self):
+        lifesUI = self.lifes
+        x = 50
+        for i in range(lifesUI):
+            self.screen.blit(HEART, (x, 10))
+            x += 40 
+            
+        
 
     def show_menu(self, death_count = 0):
         self.game_running = True
-        self.screen.fill(COLORS["purple"])
+        self.screen.blit(BGMENU,(0, 0))
 
         self.print_menu_elements(death_count)
 
@@ -106,7 +128,6 @@ class Game:
         self.screen.blit(BIRD[1], (SCREEN_WIDTH - 150, SCREEN_HEIGHT//2 - 240))
 
 
-
     def handle_key_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -117,4 +138,8 @@ class Game:
             if event.type == pygame.KEYDOWN:
                 self.run()
 
-
+#agregarle 1 power up
+#agregarle 1 obstaculo
+#agregarle si se puede un fondo diferente
+#agregarle nubes
+#agregaarle lo que queremos a nuestra creatividad
