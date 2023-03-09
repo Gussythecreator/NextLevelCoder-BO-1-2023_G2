@@ -2,7 +2,7 @@ from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 from dino_runner.components.power_ups.power_up_manager import PowerUpManager
 from dino_runner.components.text_utils import TextUtils
 import pygame, os
-from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, COLORS, RUNNING, BIRD, BGMENU, FONDOP, HEART
+from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, COLORS, RUNNING, BIRD, BGMENU, FONDOP, HEART, FONDOP2, FONDOP3, FONDOP4
 from dino_runner.components.dinosaur import Dinosaur
 
 
@@ -62,8 +62,12 @@ class Game:
         if self.points >= 0:
             self.screen.blit(FONDOP, (0, 0))
         if self.points >= 500:
-            self.screen.fill(COLORS["white"])
-        
+            self.screen.blit(FONDOP2,(0, 0))
+        if self.points >= 1000:
+            self.screen.blit(FONDOP3,(0, 0))
+        if self.points >= 1500:
+            self.screen.blit(FONDOP4,(0, 0))
+
         self.draw_background()
 
         self.player.draw(self.screen)

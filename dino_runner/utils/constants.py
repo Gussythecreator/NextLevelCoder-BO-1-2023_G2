@@ -70,6 +70,9 @@ HAMMER = pygame.image.load(os.path.join(IMG_DIR, 'Other/hammer.png'))
 BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/tierra.png'))
 BGMENU = pygame.image.load(os.path.join(IMG_DIR, 'Other/Dino-Chrome.png'))
 FONDOP = pygame.image.load(os.path.join(IMG_DIR, 'Other/fondopasto.png'))
+FONDOP2 = pygame.image.load(os.path.join(IMG_DIR, 'Other/fondo2.png'))
+FONDOP3 = pygame.image.load(os.path.join(IMG_DIR, 'Other/fondo3.png'))
+FONDOP4 = pygame.image.load(os.path.join(IMG_DIR, 'Other/fondo4.png'))
 
 HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
 
